@@ -39,7 +39,13 @@ N     ::= T_NUMBER          (one or more digits)
 
 ## Build
 
-Compile with `gcc`:
+Compile with `make`:
+
+```bash
+make
+```
+
+Or directly with `gcc`:
 
 ```bash
 gcc drLL.c -o drLL
@@ -84,6 +90,24 @@ Each input line must be a valid expression according to the grammar above. Expre
 
 ---
 
+## Testing
+
+Run the parser against the provided test file `drLL.txt`:
+
+```bash
+make test
+```
+
+This is equivalent to:
+
+```bash
+./drLL < drLL.txt
+```
+
+The test file contains a variety of valid expressions covering arithmetic operations, assignments, ternary conditionals, and nested combinations.
+
+---
+
 ## Error Handling
 
 If the parser encounters an unexpected token, it prints a descriptive error message to `stderr` indicating the line number and the expected vs. received token, then exits:
@@ -99,6 +123,8 @@ ERROR in line N -- Unexpected Token (Expected:..., Read:...) at end of Parsing
 ```
 PARSER-RECURSIVO-DESCENDENTE/
 ├── drLL.c      # Parser source code
+├── drLL.txt    # Test input file
+├── Makefile    # Build and test rules
 ├── drLL        # Compiled binary
 └── README.md   # This file
 ```
