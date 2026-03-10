@@ -1,5 +1,5 @@
-// Maria Romero Martin
-// 100472330@alumnos.uc3m.es 
+// Maria Romero Martin y Guillermo García Ortega
+// 100472330@alumnos.uc3m.es 100472109@alumnos.uc3m.es
 
 #include <ctype.h>
 #include <stdio.h>
