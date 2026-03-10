@@ -231,7 +231,23 @@ void ParseE() // E ::= (C)
     } else {
         rd_syntax_error ('(', tokens.token, "-- Unexpected Token (Expected:%d=None, Read:%d) at end of Parsing\n") ;
     }
-}   
+}
+
+//Function that Parses P ::= E | V | N
+void ParseP() // P ::= E | V | N
+{
+    if (tokens.token == '(') {
+        ParseE(); // Parse E
+    } else if (tokens.token == T_VARIABLE) {
+        ParseV(); // Parse V   
+    } else if (tokens.token == T_NUMBER) {
+        ParseN(); // Parse N
+    } else {
+        rd_syntax_error (T_VARIABLE, tokens.token, "-- Unexpected Token (Expected:%d=None, Read:%d) at end of Parsing\n") ;
+    }
+}
+
+
 
 int main (int argc, char **argv) 
 {
