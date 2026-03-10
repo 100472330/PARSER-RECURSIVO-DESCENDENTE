@@ -126,12 +126,22 @@ void MatchSymbol (int expected_token)
 
 // #define ParseLParen() 	MatchSymbol ('(') ; // More concise and efficient definitions
 // #define ParseRParen() 	MatchSymbol (')') ; ///   rather than using functions
-											/// The actual recomendation is to use MatchSymbol in the code rather than theese macros
+/// The actual recomendation is to use MatchSymbol in the code rather than theese macros
 
 
 void ParseYourGrammar ()
 {
 }
+
+void ParseV(); // V ::= T_VARIABLE
+void ParseN(); // N ::= T_NUMBER
+int ParseO(); //O ::= T_OPERATOR
+void ParseX(); // X ::= lambda |PP
+void ParseA(); // A ::= PX
+void ParseC(); // C ::= OPP | ?PPP | =VA
+void ParseE(); // E ::= (C)
+void ParseP(); // P ::= E | V | N
+void ParseAxiom(); // Axiom ::= P
 
 
 void ParseAxiom () 
