@@ -133,6 +133,7 @@ void ParseYourGrammar ()
 {
 }
 
+//Updated Grammar for the LL(1) Parser Design. 
 void ParseV(); // V ::= T_VARIABLE
 void ParseN(); // N ::= T_NUMBER
 int ParseO(); //O ::= T_OPERATOR
@@ -143,6 +144,16 @@ void ParseE(); // E ::= (C)
 void ParseP(); // P ::= E | V | N
 void ParseAxiom(); // Axiom ::= P
 
+//Function that Parses Variables. 
+voidParseV() // V ::= T_VARIABLE
+{
+    if (tokens.token == T_VARIABLE) {
+        printf("%s", tokens.variable_name); 
+        MatchSymbol (T_VARIABLE) ;
+    } else {
+        rd_syntax_error (T_VARIABLE, tokens.token, "-- Unexpected Token (Expected:%d=None, Read:%d) at end of Parsing\n") ;
+    }
+}
 
 void ParseAxiom () 
 {									/// Axiom ::= \n
