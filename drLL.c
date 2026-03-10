@@ -179,10 +179,10 @@ int ParseO() //O ::= T_OPERATOR
     }
 }
 
-//Function that Parses X ::= lambda | PP
+//Function that Parses Assignation' (Represented as X in the code grammar) (see documentation drLL.pdf).
 void ParseX() // X ::= lambda | PP  
 {
-    // lambda when nothing more to parse: end of line or closing paren
+    // lambda when we reach a point where there is nothing more to parse
     if (tokens.token == '\n' || tokens.token == ')') {
         return; // lambda case, do nothing
     } else {
@@ -191,19 +191,19 @@ void ParseX() // X ::= lambda | PP
     }
 }
 
-//Function that Parses A ::= PX
+//Function that Parses Assignation. 
 void ParseA() // A ::= PX       
 {
     ParseP(); // Parse P
     ParseX(); // Parse X
 }
 
-//Function that Parses C ::= OPP | ?PPP | =VA
+//Function that Parses Container.
 void ParseC() // C ::= OPP | ?PPP | =VA                                 
 {
     if (tokens.token == T_OPERATOR) {
-        int op = tokens.token_val; // save operator character before consuming it
-        ParseO(); // consume operator token
+        int op = tokens.token_val; 
+        ParseO(); // Parse O
         printf("(");
         ParseP(); // Parse first P
         printf(" %c ", op);
@@ -219,11 +219,11 @@ void ParseC() // C ::= OPP | ?PPP | =VA
         ParseP(); // false branch
         printf(")");
     } else if (tokens.token == '=') {
-        MatchSymbol ('=') ; // Match '='
+        MatchSymbol ('=') ; 
         printf("(");
-        ParseV(); // Parse V (prints variable name)
+        ParseV(); // Parse V 
         printf(" = ");
-        ParseA(); // Parse A (prints expression)
+        ParseA(); // Parse A 
         printf(")");
     } else {
         rd_syntax_error (T_OPERATOR, tokens.token, "-- Unexpected Token (Expected:%d=None, Read:%d) at end of Parsing\n") ;
@@ -246,7 +246,7 @@ void ParseE() // E ::= (C)
     }
 }
 
-//Function that Parses P ::= E | V | N
+//Function that Parses Parameter.
 void ParseP() // P ::= E | V | N
 {
     if (tokens.token == '(') {
@@ -260,11 +260,11 @@ void ParseP() // P ::= E | V | N
     }
 }
 
-//Function that Parses Axiom ::= P
+//Function that Parses Axiom.
 void ParseAxiom() // Axiom ::= P
 {
     ParseP(); // Parse P
-    printf("\n"); // print newline after full expression
+    printf("\n"); 
     if (tokens.token == '\n') {
         MatchSymbol ('\n');
     } else {
