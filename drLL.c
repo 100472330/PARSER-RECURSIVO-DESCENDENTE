@@ -155,7 +155,18 @@ voidParseV() // V ::= T_VARIABLE
     }
 }
 
-void ParseAxiom () 
+//Function that Parses Numbers.
+void ParseN() // N ::= T_NUMBER
+{
+    if (tokens.token == T_NUMBER) {
+        printf("%d", tokens.number); 
+        MatchSymbol (T_NUMBER) ;
+    } else {
+        rd_syntax_error (T_NUMBER, tokens.token, "-- Unexpected Token (Expected:%d=None, Read:%d) at end of Parsing\n") ;
+    }
+
+}
+
 {									/// Axiom ::= \n
 	ParseYourGrammar () ;			/// Dummy Parser. Complete this with your design								
 	if (tokens.token == '\n') {	
