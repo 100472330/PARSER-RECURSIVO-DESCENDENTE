@@ -145,7 +145,7 @@ void ParseP(); // P ::= E | V | N
 void ParseAxiom(); // Axiom ::= P
 
 //Function that Parses Variables. 
-voidParseV() // V ::= T_VARIABLE
+void ParseV() // V ::= T_VARIABLE
 {
     if (tokens.token == T_VARIABLE) {
         printf("%s", tokens.variable_name); 
@@ -175,13 +175,15 @@ int ParseO() //O ::= T_OPERATOR
         return tokens.token_val; 
     } else {
         rd_syntax_error (T_OPERATOR, tokens.token, "-- Unexpected Token (Expected:%d=None, Read:%d) at end of Parsing\n") ;
+        return -1;
     }
 }
 
 //Function that Parses X ::= lambda | PP
 void ParseX() // X ::= lambda | PP  
 {
-    if (tokens.token == '\n') {
+    // lambda when nothing more to parse: end of line or closing paren
+    if (tokens.token == '\n' || tokens.token == ')') {
         return; // lambda case, do nothing
     } else {
         ParseP(); // Parse P
@@ -200,18 +202,29 @@ void ParseA() // A ::= PX
 void ParseC() // C ::= OPP | ?PPP | =VA                                 
 {
     if (tokens.token == T_OPERATOR) {
-        int operator = ParseO(); // Parse O
-        ParseP(); // Parse P
-        ParseP(); // Parse P
+        int op = tokens.token_val; // save operator character before consuming it
+        ParseO(); // consume operator token
+        printf("(");
+        ParseP(); // Parse first P
+        printf(" %c ", op);
+        ParseP(); // Parse second P
+        printf(")");
     } else if (tokens.token == '?') {
         MatchSymbol ('?') ; // Match '?'
-        ParseP(); // Parse P
-        ParseP(); // Parse P
-        ParseP(); // Parse P
+        printf("(");
+        ParseP(); // condition
+        printf(" ? ");
+        ParseP(); // true branch
+        printf(" : ");
+        ParseP(); // false branch
+        printf(")");
     } else if (tokens.token == '=') {
         MatchSymbol ('=') ; // Match '='
-        ParseV(); // Parse V
-        ParseA(); // Parse A
+        printf("(");
+        ParseV(); // Parse V (prints variable name)
+        printf(" = ");
+        ParseA(); // Parse A (prints expression)
+        printf(")");
     } else {
         rd_syntax_error (T_OPERATOR, tokens.token, "-- Unexpected Token (Expected:%d=None, Read:%d) at end of Parsing\n") ;
     }
@@ -251,6 +264,7 @@ void ParseP() // P ::= E | V | N
 void ParseAxiom() // Axiom ::= P
 {
     ParseP(); // Parse P
+    printf("\n"); // print newline after full expression
     if (tokens.token == '\n') {
         MatchSymbol ('\n');
     } else {
