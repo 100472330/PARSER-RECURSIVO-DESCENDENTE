@@ -1,0 +1,11 @@
+// Maria Romero Martin
+// 100472330@alumnos.uc3m.es 
+
+#include <ctype.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define T_NUMBER 	1001
+#define T_OPERATOR	1002
+#define T_VARIABLE  	1003
