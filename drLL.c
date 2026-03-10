@@ -167,6 +167,17 @@ void ParseN() // N ::= T_NUMBER
 
 }
 
+//Function that Parses Operators.
+int ParseO() //O ::= T_OPERATOR     
+{
+    if (tokens.token == T_OPERATOR) {
+        MatchSymbol (T_OPERATOR) ;
+        return tokens.token_val; 
+    } else {
+        rd_syntax_error (T_OPERATOR, tokens.token, "-- Unexpected Token (Expected:%d=None, Read:%d) at end of Parsing\n") ;
+    }
+}
+
 {									/// Axiom ::= \n
 	ParseYourGrammar () ;			/// Dummy Parser. Complete this with your design								
 	if (tokens.token == '\n') {	
