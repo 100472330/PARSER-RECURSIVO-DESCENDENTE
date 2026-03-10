@@ -247,7 +247,16 @@ void ParseP() // P ::= E | V | N
     }
 }
 
-
+//Function that Parses Axiom ::= P
+void ParseAxiom() // Axiom ::= P
+{
+    ParseP(); // Parse P
+    if (tokens.token == '\n') {
+        MatchSymbol ('\n');
+    } else {
+        rd_syntax_error ('\n', tokens.token, "-- Unexpected Token (Expected:%d=None, Read:%d) at end of Parsing\n") ;
+    }
+}   
 
 int main (int argc, char **argv) 
 {
