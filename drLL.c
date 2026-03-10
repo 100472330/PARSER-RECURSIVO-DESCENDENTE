@@ -210,7 +210,7 @@ void ParseC() // C ::= OPP | ?PPP | =VA
         ParseP(); // Parse second P
         printf(")");
     } else if (tokens.token == '?') {
-        MatchSymbol ('?') ; // Match '?'
+        MatchSymbol ('?') ; 
         printf("(");
         ParseP(); // condition
         printf(" ? ");
@@ -234,10 +234,10 @@ void ParseC() // C ::= OPP | ?PPP | =VA
 void ParseE() // E ::= (C)
 {
     if (tokens.token == '(') {
-        MatchSymbol ('(') ; // Match '('
+        MatchSymbol ('(') ; 
         ParseC(); // Parse C
         if (tokens.token == ')') {
-            MatchSymbol (')') ; // Match ')'
+            MatchSymbol (')') ; 
         } else {
             rd_syntax_error (')', tokens.token, "-- Unexpected Token (Expected:%d=None, Read:%d) at end of Parsing\n") ;
         }
