@@ -198,15 +198,24 @@ void ParseA() // A ::= PX
 
 //Function that Parses C ::= OPP | ?PPP | =VA
 void ParseC() // C ::= OPP | ?PPP | =VA                                 
-{									/// Axiom ::= \n
-	ParseYourGrammar () ;			/// Dummy Parser. Complete this with your design								
-	if (tokens.token == '\n') {	
-	    printf ("\n") ; 
-		MatchSymbol ('\n') ;		
-	} else { 
-		rd_syntax_error (-1, tokens.token, "-- Unexpected Token (Expected:%d=None, Read:%d) at end of Parsing\n") ;
-	}
-}
+{
+    if (tokens.token == T_OPERATOR) {
+        int operator = ParseO(); // Parse O
+        ParseP(); // Parse P
+        ParseP(); // Parse P
+    } else if (tokens.token == '?') {
+        MatchSymbol ('?') ; // Match '?'
+        ParseP(); // Parse P
+        ParseP(); // Parse P
+        ParseP(); // Parse P
+    } else if (tokens.token == '=') {
+        MatchSymbol ('=') ; // Match '='
+        ParseV(); // Parse V
+        ParseA(); // Parse A
+    } else {
+        rd_syntax_error (T_OPERATOR, tokens.token, "-- Unexpected Token (Expected:%d=None, Read:%d) at end of Parsing\n") ;
+    }
+}   
 
 //Function that Parses E ::= (C)
 void ParseE() // E ::= (C)
