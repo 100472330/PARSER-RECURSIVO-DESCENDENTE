@@ -178,6 +178,26 @@ int ParseO() //O ::= T_OPERATOR
     }
 }
 
+//Function that Parses X ::= lambda | PP
+void ParseX() // X ::= lambda | PP  
+{
+    if (tokens.token == '\n') {
+        return; // lambda case, do nothing
+    } else {
+        ParseP(); // Parse P
+        ParseP(); // Parse P
+    }
+}
+
+//Function that Parses A ::= PX
+void ParseA() // A ::= PX       
+{
+    ParseP(); // Parse P
+    ParseX(); // Parse X
+}
+
+//Function that Parses C ::= OPP | ?PPP | =VA
+void ParseC() // C ::= OPP | ?PPP | =VA                                 
 {									/// Axiom ::= \n
 	ParseYourGrammar () ;			/// Dummy Parser. Complete this with your design								
 	if (tokens.token == '\n') {	
@@ -188,6 +208,21 @@ int ParseO() //O ::= T_OPERATOR
 	}
 }
 
+//Function that Parses E ::= (C)
+void ParseE() // E ::= (C)
+{
+    if (tokens.token == '(') {
+        MatchSymbol ('(') ; // Match '('
+        ParseC(); // Parse C
+        if (tokens.token == ')') {
+            MatchSymbol (')') ; // Match ')'
+        } else {
+            rd_syntax_error (')', tokens.token, "-- Unexpected Token (Expected:%d=None, Read:%d) at end of Parsing\n") ;
+        }
+    } else {
+        rd_syntax_error ('(', tokens.token, "-- Unexpected Token (Expected:%d=None, Read:%d) at end of Parsing\n") ;
+    }
+}   
 
 int main (int argc, char **argv) 
 {
